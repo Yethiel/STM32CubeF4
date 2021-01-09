@@ -97,44 +97,44 @@ uint8_t BSP_GYRO_Init(void)
 {  
   uint8_t ret = GYRO_ERROR;
   uint16_t ctrl = 0x0000;
-  GYRO_InitTypeDef         L3GD20_InitStructure;
-  GYRO_FilterConfigTypeDef L3GD20_FilterStructure = {0,0};
+  GYRO_InitTypeDef         I3G4250D_InitStructure;
+  GYRO_FilterConfigTypeDef I3G4250D_FilterStructure = {0,0};
  
-  if((L3gd20Drv.ReadID() == I_AM_L3GD20) || (L3gd20Drv.ReadID() == I_AM_L3GD20_TR))
+  if(I3g4250Drv.ReadID() == I_AM_I3G4250D)
   {
     /* Initialize the Gyroscope driver structure */
-    GyroscopeDrv = &L3gd20Drv;
+    GyroscopeDrv = &I3g4250Drv;
 
     /* MEMS configuration ----------------------------------------------------*/
     /* Fill the Gyroscope structure */
-    L3GD20_InitStructure.Power_Mode = L3GD20_MODE_ACTIVE;
-    L3GD20_InitStructure.Output_DataRate = L3GD20_OUTPUT_DATARATE_1;
-    L3GD20_InitStructure.Axes_Enable = L3GD20_AXES_ENABLE;
-    L3GD20_InitStructure.Band_Width = L3GD20_BANDWIDTH_4;
-    L3GD20_InitStructure.BlockData_Update = L3GD20_BlockDataUpdate_Continous;
-    L3GD20_InitStructure.Endianness = L3GD20_BLE_LSB;
-    L3GD20_InitStructure.Full_Scale = L3GD20_FULLSCALE_500; 
+    I3G4250D_InitStructure.Power_Mode = I3G4250D_MODE_ACTIVE;
+    I3G4250D_InitStructure.Output_DataRate = I3G4250D_OUTPUT_DATARATE_1;
+    I3G4250D_InitStructure.Axes_Enable = I3G4250D_AXES_ENABLE;
+    I3G4250D_InitStructure.Band_Width = I3G4250D_BANDWIDTH_4;
+    I3G4250D_InitStructure.BlockData_Update = I3G4250D_BlockDataUpdate_Continous;
+    I3G4250D_InitStructure.Endianness = I3G4250D_BLE_LSB;
+    I3G4250D_InitStructure.Full_Scale = I3G4250D_FULLSCALE_500;
   
     /* Configure MEMS: data rate, power mode, full scale and axes */
-    ctrl = (uint16_t) (L3GD20_InitStructure.Power_Mode | L3GD20_InitStructure.Output_DataRate | \
-                      L3GD20_InitStructure.Axes_Enable | L3GD20_InitStructure.Band_Width);
+    ctrl = (uint16_t) (I3G4250D_InitStructure.Power_Mode | I3G4250D_InitStructure.Output_DataRate | \
+                      I3G4250D_InitStructure.Axes_Enable | I3G4250D_InitStructure.Band_Width);
   
-    ctrl |= (uint16_t) ((L3GD20_InitStructure.BlockData_Update | L3GD20_InitStructure.Endianness | \
-                        L3GD20_InitStructure.Full_Scale) << 8);
+    ctrl |= (uint16_t) ((I3G4250D_InitStructure.BlockData_Update | I3G4250D_InitStructure.Endianness | \
+                        I3G4250D_InitStructure.Full_Scale) << 8);
 
     /* Configure the Gyroscope main parameters */
     GyroscopeDrv->Init(ctrl);
   
-    L3GD20_FilterStructure.HighPassFilter_Mode_Selection =L3GD20_HPM_NORMAL_MODE_RES;
-    L3GD20_FilterStructure.HighPassFilter_CutOff_Frequency = L3GD20_HPFCF_0;
+    I3G4250D_FilterStructure.HighPassFilter_Mode_Selection =I3G4250D_HPM_NORMAL_MODE_RES;
+    I3G4250D_FilterStructure.HighPassFilter_CutOff_Frequency = I3G4250D_HPFCF_0;
   
-    ctrl = (uint8_t) ((L3GD20_FilterStructure.HighPassFilter_Mode_Selection |\
-                       L3GD20_FilterStructure.HighPassFilter_CutOff_Frequency));    
+    ctrl = (uint8_t) ((I3G4250D_FilterStructure.HighPassFilter_Mode_Selection |\
+                       I3G4250D_FilterStructure.HighPassFilter_CutOff_Frequency));
   
     /* Configure the Gyroscope main parameters */
     GyroscopeDrv->FilterConfig(ctrl) ;
   
-    GyroscopeDrv->FilterCmd(L3GD20_HIGHPASSFILTER_ENABLE);
+    GyroscopeDrv->FilterCmd(I3G4250D_HIGHPASSFILTER_ENABLE);
   
     ret = GYRO_OK;
   }
@@ -247,3 +247,4 @@ void BSP_GYRO_GetXYZ(float *pfData)
   */ 
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/     
+
